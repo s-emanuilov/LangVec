@@ -6,5 +6,4 @@ Language of Vectors (LoV) is a simple library that helps to visually understand 
 TODO
 
 ## Usage
-
 TODO
