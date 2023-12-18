@@ -7,8 +7,10 @@ class LoV:
     def __init__(self, alphabet=ALPHABET):
         self.alphabet = alphabet
         self.alphabet_size = len(alphabet)
+        self.alphabet_distribution = None
         self.chunk_size = 3
         self.dimension = 10
+        self.percentiles = None
 
     def __call__(self, *args, **kwargs):
         self.get_alphabet_distribution()
@@ -31,14 +33,14 @@ class LoV:
         words_for_vector = []
 
         for i in range(0, len(input_vector), chunk_size):
-            chunk = input_vector[i : i + chunk_size]
+            chunk = input_vector[i: i + chunk_size]
             avg_value = np.mean(chunk)
-            index = sum(avg_value > percentiles)
+            index = sum(avg_value > self.percentiles)
             words_for_vector.append(self.alphabet[index])
         if summarized:
             return (
-                words_for_vector[:3]
-                + ["....."]
-                + words_for_vector[len(words_for_vector) - 3 :]
+                    words_for_vector[:3]
+                    + ["....."]
+                    + words_for_vector[len(words_for_vector) - 3:]
             )
         return words_for_vector
