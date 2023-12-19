@@ -1,6 +1,6 @@
 import numpy as np
 
-from .constants import ALPHABET
+from constants import ALPHABET
 
 
 class LoV:
@@ -11,8 +11,6 @@ class LoV:
         self.chunk_size = 3
         self.dimension = 10
         self.percentiles = None
-
-    def __call__(self, *args, **kwargs):
         self.get_alphabet_distribution()
 
     def get_alphabet_distribution(self):
@@ -26,8 +24,8 @@ class LoV:
         self.percentiles = np.percentile(data, self.alphabet_distribution)
 
     def fit(self, X):
-        # np.concatenate((v_1, v_2, v_3, v_4, v_5))
-        pass
+        elements = np.concatenate(X)
+        self.calculate_percentiles(elements)
 
     def predict(self, input_vector, chunk_size=3, summarized=False):
         words_for_vector = []
