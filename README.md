@@ -1,7 +1,14 @@
-# LoV
+<p align="center">
+  <img src="assets/logo.png" alt="LoV Logo" width="110">
+</p>
 
-Language of Vectors (LoV) is a simple Python library designed for transforming numerical vector data into a language-like structure using a predefined set of words (lexicon). 
-This approach leverages the concept of percentile-based mapping to assign words from a lexicon to numerical values, facilitating intuitive and human-readable representations of numerical data.
+<p align="center">
+  <i>Language of Vectors (LoV) is a simple Python library designed for transforming numerical vector data into a language-like structure using a predefined set of words (lexicon).</i>
+</p>
+
+## Approach
+
+LoV package leverages the concept of percentile-based mapping to assign words from a lexicon to numerical values, facilitating intuitive and human-readable representations of numerical data.
 
 ## Where to use LoV
 The LoV library finds its prime application is in semantic search and similarity based systems, where understanding the proximity between vectors is crucial.  
