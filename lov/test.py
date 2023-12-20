@@ -1,7 +1,7 @@
 import numpy as np
 from lov import LoV
 
-VECTORS_DIMENSIONS = 10
+VECTORS_DIMENSIONS = 50
 
 v_1 = np.random.uniform(0, 1, VECTORS_DIMENSIONS)
 v_2 = np.random.uniform(0, 1, VECTORS_DIMENSIONS)
@@ -16,5 +16,5 @@ lov.fit(d)
 
 d = lov.predict(v_5, summarized=True)
 print(d)
-d = lov.predict(v_1, summarized=True)
+d = lov.predict(v_1, summarized=False)
 print(d)
