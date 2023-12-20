@@ -1,27 +1,26 @@
 import numpy as np
 
-from constants import ALPHABET
+from constants import LEXICON
 
 
 class LoV:
-    def __init__(self, alphabet=ALPHABET):
-        self.alphabet = alphabet
-        self.alphabet_size = len(alphabet)
-        self.alphabet_distribution = None
-        self.chunk_size = 3
-        self.dimension = 10
+    def __init__(self, lexicon=LEXICON, chunk_size=3):
+        self.lexicon = lexicon
+        self.lexicon_size = len(lexicon)
+        self.lexicon_distribution = None
+        self.chunk_size = chunk_size
         self.percentiles = None
-        self.get_alphabet_distribution()
+        self.get_lexicon_distribution()
 
-    def get_alphabet_distribution(self):
-        if self.alphabet_size <= 1:
-            self.alphabet_distribution = (50,)  # Default to median if only two words
-        self.alphabet_distribution = tuple(
-            np.linspace(0, 100, self.alphabet_size + 1)[1:-1]
+    def get_lexicon_distribution(self):
+        if self.lexicon_size <= 1:
+            self.lexicon_distribution = (50,)  # Default to median if only two words
+        self.lexicon_distribution = tuple(
+            np.linspace(0, 100, self.lexicon_size + 1)[1:-1]
         )
 
     def calculate_percentiles(self, data):
-        self.percentiles = np.percentile(data, self.alphabet_distribution)
+        self.percentiles = np.percentile(data, self.lexicon_distribution)
 
     def fit(self, X):
         elements = np.concatenate(X)
@@ -31,14 +30,14 @@ class LoV:
         words_for_vector = []
 
         for i in range(0, len(input_vector), chunk_size):
-            chunk = input_vector[i: i + chunk_size]
+            chunk = input_vector[i : i + chunk_size]
             avg_value = np.mean(chunk)
             index = sum(avg_value > self.percentiles)
-            words_for_vector.append(self.alphabet[index])
+            words_for_vector.append(self.lexicon[index])
         if summarized:
             return (
-                    words_for_vector[:3]
-                    + ["....."]
-                    + words_for_vector[len(words_for_vector) - 3:]
+                words_for_vector[:3]
+                + ["....."]
+                + words_for_vector[len(words_for_vector) - 3 :]
             )
         return words_for_vector
