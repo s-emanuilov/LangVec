@@ -1,10 +1,10 @@
 import numpy as np
 from typing import List, Tuple
 
-from constants import LEXICON
+from .constants import LEXICON
 
 
-class LoV:
+class LangVec:
     def __init__(self, lexicon: List[str] = LEXICON, chunk_size: int = 3):
         self.lexicon = lexicon
         self.lexicon_size = len(lexicon)

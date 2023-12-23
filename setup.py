@@ -6,15 +6,15 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setup(
-    name="LoV",
+    name="langvec",
     version="0.0.1",
     author="Simeon Emanuilov",
     author_email="simeon.emanuilov@gmail.com",
-    description="Language of Vectors (LoV) is a simple Python library designed for transforming numerical vector data into a language-like structure using a predefined set of words (lexicon).",
+    description="Language of Vectors (LangVec) is a simple Python library designed for transforming numerical vector data into a language-like structure using a predefined set of words (lexicon).",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license="MIT",
-    packages=["lov"],
+    packages=["langvec"],
     python_requires=">=3.00",
     install_requires=[
         "numpy"
@@ -33,5 +33,5 @@ setup(
         "Topic :: Software Development :: Libraries",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    keywords="LoV semantic search vectorization",
+    keywords="langvec semantic search vectorization",
 )

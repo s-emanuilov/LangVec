@@ -1,6 +1,6 @@
 import numpy as np
 
-from lov import LoV
+from langvec import LangVec
 
 # Define the dimensionality of the vectors
 VECTORS_DIMENSIONS = 50
@@ -16,18 +16,18 @@ v_5 = np.random.uniform(0, 1, 10)
 vectors = [v_1, v_2, v_3, v_4, v_5]
 
 # Initiate object
-lov = LoV()
+lv = LangVec()
 
 # Fit to get with the distribution
-lov.fit(vectors)
+lv.fit(vectors)
 
 # Predict with summary on some of the vectors (getting the lexicon representation)
-print(lov.predict(v_5, summarized=True))
+print(lv.predict(v_5, summarized=True))
 
 # Change slighly some of the elements of given vector
 v_6 = v_5
 v_6[0] += 0.1
-print(lov.predict(v_6, summarized=True))
+print(lv.predict(v_6, summarized=True))
 
 # Predict without summary on some of the vectors (getting the lexicon representation)
-print(lov.predict(v_1, summarized=False))
+print(lv.predict(v_1, summarized=False))
