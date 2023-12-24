@@ -10,6 +10,11 @@
 
 `LangVec` package leverages the concept of percentile-based mapping to assign words from a lexicon to numerical values, facilitating intuitive and human-readable representations of numerical data.
 
+<p align="center">
+  <img src="assets/langvec-schema.jpg" alt="LangVec Simplified schema" title="Simplified schema" width="900">
+  <i>Simplified schema of how LangVec works</i>
+</p>
+
 ## Where to use LangVec
 Main application is in semantic search and similarity based systems, where understanding the proximity between vectors is crucial.  
 By transforming complex numerical vectors into a lexicon-based representation, `LangVec` facilitates an intuitive understanding of these similarities for humans. 
