@@ -37,7 +37,7 @@ class LangVec:
 
         words_for_vector = [
             self.lexicon[
-                sum(np.mean(input_vector[i: i + chunk_size]) > self.percentiles)
+                sum(np.mean(input_vector[i : i + chunk_size]) > self.percentiles)
             ]
             for i in range(0, len(input_vector), chunk_size)
         ]
