@@ -14,7 +14,6 @@ v_5 = np.random.uniform(0, 1, 10)
 
 # Make them as list
 vectors = [v_1, v_2, v_3, v_4, v_5]
-
 # Initiate object
 lv = LangVec()
 
