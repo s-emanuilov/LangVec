@@ -2,31 +2,34 @@ import numpy as np
 
 from langvec import LangVec
 
+# Set a seed for reproducibility
+np.random.seed(42)
+
 # Define the dimensionality of the vectors
-VECTORS_DIMENSIONS = 50
+NUM_VECTORS = 1000
+VECTORS_DIMENSIONS = 768
 
-# Generate some random vectors
-v_1 = np.random.uniform(0, 1, VECTORS_DIMENSIONS)
-v_2 = np.random.uniform(0, 1, VECTORS_DIMENSIONS)
-v_3 = np.random.uniform(0, 1, VECTORS_DIMENSIONS)
-v_4 = np.random.uniform(0, 1, VECTORS_DIMENSIONS)
-v_5 = np.random.uniform(0, 1, 10)
+# Generate random vectors using list comprehension
+vectors = [np.random.uniform(0, 1, VECTORS_DIMENSIONS) for _ in range(NUM_VECTORS)]
 
-# Make them as list
-vectors = [v_1, v_2, v_3, v_4, v_5]
+input_vector = np.random.uniform(0, 1, VECTORS_DIMENSIONS)
+
 # Initiate object
 lv = LangVec()
 
 # Fit to get with the distribution
 lv.fit(vectors)
+lv.save("model.lv")
+lv.info()
+# lv.load("model.lv")
 
 # Predict with summary on some of the vectors (getting the lexicon representation)
-print(lv.predict(v_5, summarized=True))
+print(lv.predict(input_vector, summarized=True))
 
-# Change slighly some of the elements of given vector
-v_6 = v_5
-v_6[0] += 0.1
-print(lv.predict(v_6, summarized=True))
+# Change slightly some of the elements of given vector
+input_vector_copy = input_vector
+input_vector_copy[0] += 0.1
+print(lv.predict(input_vector_copy, summarized=True))
 
 # Predict without summary on some of the vectors (getting the lexicon representation)
-print(lv.predict(v_1, summarized=False))
+print(lv.predict(input_vector, summarized=False))
