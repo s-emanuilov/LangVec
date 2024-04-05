@@ -26,3 +26,6 @@ LEXICON = [
     "yak",
     "zip",
 ]
+
+MAX_SAMPLES = 10_000_000
+BATCH_SIZE = 10_000
