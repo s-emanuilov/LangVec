@@ -7,6 +7,8 @@ import numpy as np
 
 from .constants import LEXICON, MAX_SAMPLES
 
+os.environ["OMP_NUM_THREADS"] = "12"
+
 
 class LangVec:
     def __init__(self, lexicon: List[str] = LEXICON, chunk_size: int = 3):
@@ -25,7 +27,7 @@ class LangVec:
         self.percentiles = np.percentile(data, self._lexicon_distribution)
 
     def _validate_input(self, X: List[np.ndarray]):
-        if not isinstance(X, list):
+        if not (isinstance(X, list) or isinstance(X, np.ndarray)):
             raise TypeError("❌ Input data must be provided as a list of numpy arrays.")
 
         if not all(isinstance(x, np.ndarray) for x in X):
@@ -54,7 +56,11 @@ class LangVec:
             raise ValueError(f"❌ Error in fitting data: {e}")
 
     def predict(
-            self, input_vector: np.ndarray, chunk_size: int = 3, summarized: bool = False, padding: bool = True
+        self,
+        input_vector: np.ndarray,
+        chunk_size: int = 3,
+        summarized: bool = False,
+        padding: bool = True,
     ) -> List[str]:
         if not isinstance(self.percentiles, np.ndarray) or len(self.percentiles) == 0:
             raise ValueError(
@@ -69,22 +75,23 @@ class LangVec:
 
         if self.lexicon_size - 1 != len(self.percentiles):
             raise ValueError(
-                "❌ Lexicon size does not match learned distribution. Maybe you used different lexicon on training?")
+                "❌ Lexicon size does not match learned distribution. Maybe you used different lexicon on training?"
+            )
 
         words_for_vector = []
         for i in range(0, len(input_vector), chunk_size):
-            chunk = input_vector[i: i + chunk_size]
+            chunk = input_vector[i : i + chunk_size]
             if len(chunk) < chunk_size:
                 if padding:
                     # Pad the last chunk with zeros if it has fewer elements than chunk_size
-                    chunk = np.pad(chunk, (0, chunk_size - len(chunk)), mode='constant')
+                    chunk = np.pad(chunk, (0, chunk_size - len(chunk)), mode="constant")
                 else:
                     # Trim the last chunk if padding is not desired
                     continue
             word_index = sum(np.mean(chunk) > self.percentiles)
             words_for_vector.append(self.lexicon[word_index])
 
-        if summarized and len(words_for_vector) > 3:
+        if summarized and len(words_for_vector) > 6:
             return words_for_vector[:3] + ["....."] + words_for_vector[-3:]
         return words_for_vector
 
