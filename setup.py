@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="langvec",
-    version="0.0.1",
+    version="0.0.2",
     author="Simeon Emanuilov",
     author_email="simeon.emanuilov@gmail.com",
     description="Language of Vectors (LangVec) is a simple Python library designed for transforming numerical vector data into a language-like structure using a predefined set of words (lexicon).",
