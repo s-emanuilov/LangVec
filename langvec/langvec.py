@@ -19,14 +19,34 @@ class LangVec:
         self.percentiles = None
 
     def _initialize_lexicon_distribution(self) -> Tuple[float, ...]:
+        """
+        Initialize the lexicon distribution based on the lexicon size.
+        Returns:
+            Tuple[float, ...]: A tuple of floats representing the lexicon distribution.
+        """
         if self.lexicon_size <= 1:
             return (50,)  # Default to median if only one word
         return tuple(np.linspace(0, 100, self.lexicon_size + 1)[1:-1])
 
     def _calculate_percentiles(self, data: np.ndarray) -> None:
+        """
+        Calculate percentiles from the input data using the lexicon distribution.
+        Args:
+            data (np.ndarray): The input data as a NumPy array.
+        """
         self.percentiles = np.percentile(data, self._lexicon_distribution)
 
     def _validate_input(self, X: List[np.ndarray]):
+        """
+        Validate the input data as a list of 1-dimensional NumPy arrays.
+        Args:
+            X (List[np.ndarray]): The input data as a list of NumPy arrays.
+        Returns:
+            List[np.ndarray]: The validated input data.
+        Raises:
+            TypeError: If the input data is not a list of NumPy arrays.
+            ValueError: If the input NumPy arrays are not 1-dimensional.
+        """
         if not (isinstance(X, list) or isinstance(X, np.ndarray)):
             raise TypeError("❌ Input data must be provided as a list of numpy arrays.")
 
@@ -40,14 +60,20 @@ class LangVec:
 
         return X
 
-    def fit(self, X: List[np.ndarray], max_samples: int = MAX_SAMPLES, batch_size: int = BATCH_SIZE):
+    def fit(
+        self,
+        X: List[np.ndarray],
+        max_samples: int = MAX_SAMPLES,
+        batch_size: int = BATCH_SIZE,
+    ):
         """
-        Fit the LangVec model to the input data.
-
+        Fit the LangVec model to the input data using batch processing.
         Args:
             X (List[np.ndarray]): The input data as a list of NumPy arrays.
             max_samples (int, optional): The maximum number of samples to use for fitting.
             batch_size (int, optional): The size of the batch or chunk to process at a time.
+        Raises:
+            ValueError: If there is an error in fitting the data.
         """
         self._validate_input(X)
 
@@ -63,7 +89,9 @@ class LangVec:
                 # Process the batch data
                 elements = np.concatenate(batch_data)
                 if elements.shape[0] > max_samples:
-                    sample_indices = np.random.choice(elements.shape[0], size=max_samples, replace=False)
+                    sample_indices = np.random.choice(
+                        elements.shape[0], size=max_samples, replace=False
+                    )
                     elements = elements[sample_indices]
 
                 batch_percentiles = np.percentile(elements, self._lexicon_distribution)
@@ -72,7 +100,9 @@ class LangVec:
                 if combined_percentiles is None:
                     combined_percentiles = batch_percentiles
                 else:
-                    combined_percentiles = np.concatenate((combined_percentiles, batch_percentiles))
+                    combined_percentiles = np.concatenate(
+                        (combined_percentiles, batch_percentiles)
+                    )
 
             self._calculate_percentiles(combined_percentiles)
 
@@ -80,12 +110,24 @@ class LangVec:
             raise ValueError(f"❌ Error in fitting data: {e}")
 
     def predict(
-            self,
-            input_vector: np.ndarray,
-            chunk_size: int = 3,
-            summarized: bool = False,
-            padding: bool = True,
+        self,
+        input_vector: np.ndarray,
+        chunk_size: int = 3,
+        summarized: bool = False,
+        padding: bool = True,
     ) -> List[str]:
+        """
+        Predict words from the input vector based on the learned distribution.
+        Args:
+            input_vector (np.ndarray): The input vector as a 1-dimensional NumPy array.
+            chunk_size (int, optional): The size of the chunks to split the input vector into.
+            summarized (bool, optional): Whether to summarize the predicted words if their count exceeds 6.
+            padding (bool, optional): Whether to pad the last chunk with zeros if it has fewer elements than chunk_size.
+        Returns:
+            List[str]: A list of predicted words.
+        Raises:
+            ValueError: If the model is not fitted or loaded, if the input vector is not 1-dimensional, or if the chunk size is invalid.
+        """
         if not isinstance(self.percentiles, np.ndarray) or len(self.percentiles) == 0:
             raise ValueError(
                 "❌ Model not fitted or loaded. Call 'fit' or 'load' with appropriate data before prediction."
@@ -104,7 +146,7 @@ class LangVec:
 
         words_for_vector = []
         for i in range(0, len(input_vector), chunk_size):
-            chunk = input_vector[i: i + chunk_size]
+            chunk = input_vector[i : i + chunk_size]
             if len(chunk) < chunk_size:
                 if padding:
                     # Pad the last chunk with zeros if it has fewer elements than chunk_size
@@ -120,6 +162,13 @@ class LangVec:
         return words_for_vector
 
     def save(self, filepath: str) -> None:
+        """
+        Save the LangVec model to a file.
+        Args:
+            filepath (str): The path to save the model to.
+        Raises:
+            ValueError: If the model is not fitted.
+        """
         if self.percentiles is None:
             raise ValueError("❌ Model not fitted. Call 'fit' before saving.")
 
@@ -133,6 +182,11 @@ class LangVec:
                 zipf.write(percentiles_filepath, arcname="percentiles.npy")
 
     def load(self, filepath: str) -> None:
+        """
+        Load a LangVec model from a file.
+        Args:
+            filepath (str): The path to load the model from.
+        """
         with zipfile.ZipFile(filepath, "r") as zipf:
             # Extract the model artifacts to a temporary directory
             with tempfile.TemporaryDirectory() as tmp_dir:
@@ -143,6 +197,14 @@ class LangVec:
                 self.percentiles = np.load(percentiles_filepath)
 
     def update(self, X: List[np.ndarray], max_samples: int = MAX_SAMPLES) -> None:
+        """
+        Update the LangVec model with new data.
+        Args:
+            X (List[np.ndarray]): The new data as a list of NumPy arrays.
+            max_samples (int, optional): The maximum number of samples to use for updating.
+        Raises:
+            ValueError: If there is an error in updating the data.
+        """
         self._validate_input(X)
 
         try:
