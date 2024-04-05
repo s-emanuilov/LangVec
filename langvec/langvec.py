@@ -61,13 +61,13 @@ class LangVec:
         return X
 
     def fit(
-        self,
-        X: List[np.ndarray],
-        max_samples: int = MAX_SAMPLES,
-        batch_size: int = BATCH_SIZE,
+            self,
+            X: List[np.ndarray],
+            max_samples: int = MAX_SAMPLES,
+            batch_size: int = BATCH_SIZE,
     ):
         """
-        Fit the LangVec model to the input data using batch processing.
+        Fit the LangVec model to the input data using batch processing and approximate quantile calculation.
         Args:
             X (List[np.ndarray]): The input data as a list of NumPy arrays.
             max_samples (int, optional): The maximum number of samples to use for fitting.
@@ -79,12 +79,18 @@ class LangVec:
 
         try:
             num_batches = (len(X) + batch_size - 1) // batch_size
+            quantile_distribution = [q / 100 for q in self._lexicon_distribution]
             combined_percentiles = None
+            total_samples = 0
 
             for batch_idx in range(num_batches):
                 start = batch_idx * batch_size
                 end = start + batch_size
                 batch_data = X[start:end]
+
+                # Skip empty batches
+                if not batch_data:
+                    continue
 
                 # Process the batch data
                 elements = np.concatenate(batch_data)
@@ -94,15 +100,18 @@ class LangVec:
                     )
                     elements = elements[sample_indices]
 
-                batch_percentiles = np.percentile(elements, self._lexicon_distribution)
+                batch_percentiles = np.quantile(elements, quantile_distribution)
+                batch_size = elements.shape[0]
 
-                # Combine the batch percentiles with the previous percentiles
+                # Combine the batch percentiles with the previous percentiles using a weighted average
                 if combined_percentiles is None:
                     combined_percentiles = batch_percentiles
                 else:
-                    combined_percentiles = np.concatenate(
-                        (combined_percentiles, batch_percentiles)
-                    )
+                    combined_percentiles = (
+                                            combined_percentiles * total_samples + batch_percentiles * batch_size
+                                           ) / (total_samples + batch_size)
+
+                total_samples += batch_size
 
             self._calculate_percentiles(combined_percentiles)
 
@@ -110,11 +119,11 @@ class LangVec:
             raise ValueError(f"❌ Error in fitting data: {e}")
 
     def predict(
-        self,
-        input_vector: np.ndarray,
-        chunk_size: int = 3,
-        summarized: bool = False,
-        padding: bool = True,
+            self,
+            input_vector: np.ndarray,
+            chunk_size: int = 3,
+            summarized: bool = False,
+            padding: bool = True,
     ) -> List[str]:
         """
         Predict words from the input vector based on the learned distribution.
@@ -146,7 +155,7 @@ class LangVec:
 
         words_for_vector = []
         for i in range(0, len(input_vector), chunk_size):
-            chunk = input_vector[i : i + chunk_size]
+            chunk = input_vector[i: i + chunk_size]
             if len(chunk) < chunk_size:
                 if padding:
                     # Pad the last chunk with zeros if it has fewer elements than chunk_size
