@@ -27,4 +27,4 @@ LEXICON = [
     "zip",
 ]
 
-MAX_SAMPLES = 1_000
+MAX_SAMPLES = 10_000_000
