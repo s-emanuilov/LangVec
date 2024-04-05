@@ -88,7 +88,7 @@ DIMENSIONS = 256
 # Generate some random data
 vectors = [np.random.uniform(0, 1, DIMENSIONS) for _ in range(NUM_VECTORS)]
 
-# Fit to this data (getting to know the distribution)
+# Fit to this data
 lv.fit(vectors)
 
 # Example vector for prediction
