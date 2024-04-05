@@ -154,3 +154,6 @@ cython_debug/
 
 # PyCharm
 .idea/
+
+# Temp files and artifacts
+tmp/

@@ -61,7 +61,7 @@ class TestLangVec(unittest.TestCase):
     def test_save_and_load(self):
         X = [np.random.rand(100), np.random.rand(100), np.random.rand(100)]
         self.lv.fit(X)
-        filepath = 'test_model.zip'
+        filepath = 'tmp/test_model.zip'
         self.lv.save(filepath)
         loaded_lv = LangVec(lexicon=self.lexicon, chunk_size=3)
         loaded_lv.load(filepath)
