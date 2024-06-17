@@ -1,4 +1,4 @@
-title: "Transforming numerical vector data into a language-like structure"
+title: "LangVec - transforming vectors into a language-like structure"
 description: "LangVec leverages the concept of percentile-based mapping to assign words from a lexicon to numerical values, facilitating intuitive and human-readable representations of numerical data."
 tagline: "Language of Vectors"
 url: "https://langvec.com"
