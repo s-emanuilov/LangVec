@@ -1,4 +1,4 @@
-title: "LangVec is a Python library for transforming numerical vector data into a language-like structure using a predefined set of words (lexicon)."
+title: "Transforming numerical vector data into a language-like structure"
 description: "LangVec leverages the concept of percentile-based mapping to assign words from a lexicon to numerical values, facilitating intuitive and human-readable representations of numerical data."
 tagline: "Language of Vectors"
 url: "https://langvec.com"
@@ -11,3 +11,10 @@ social:
   links:
     - https://www.linkedin.com/in/simeon-emanuilov/
     - https://github.com/simeonemanuilov
+
+minima:
+  social_links:
+    - { platform: github,  user_url: "https://github.com/simeonemanuilov" }
+    - { platform: twitter, user_url: "https://x.com/s_emanuilov" }
+    - { platform: linkedin,  user_url: "https://www.linkedin.com/in/simeon-emanuilov/" }
+    - { platform: google_scholar,  user_url: "https://scholar.google.bg/citations?user=clJUDxcAAAAJ&hl=en&oi=ao" }
