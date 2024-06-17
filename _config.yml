@@ -6,7 +6,7 @@ theme: minima
 
 logo: /assets/logo.png
 
-author: "Copyright &copy; 2024 Simeon Emanuilov. All rights reserved."
+author: "Copyright © 2024 Simeon Emanuilov. All rights reserved."
 
 social_links:
   - { platform: github, user_url: "https://github.com/simeonemanuilov", icon: "fab fa-github" }
