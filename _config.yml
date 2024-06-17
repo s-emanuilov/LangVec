@@ -2,9 +2,7 @@ title: "LangVec is a Python library for transforming numerical vector data into 
 description: "LangVec leverages the concept of percentile-based mapping to assign words from a lexicon to numerical values, facilitating intuitive and human-readable representations of numerical data."
 tagline: "Language of Vectors"
 url: "https://langvec.com"
-remote_theme: pages-themes/cayman@v0.2.0
-plugins:
-  - jekyll-remote-theme
+theme: minima
 
 logo: /assets/logo.png
 
