@@ -6,15 +6,23 @@ theme: minima
 
 logo: /assets/logo.png
 
-social:
+author:
   name: Simeon Emanuilov
-  links:
-    - https://www.linkedin.com/in/simeon-emanuilov/
-    - https://github.com/simeonemanuilov
+  bio: Senior Software Engineer | Machine Learning & Deep Learning Expert
+  location: Sofia, Bulgaria
+
+footer_content: "Copyright &copy; 2024 Simeon Emanuilov. All rights reserved."
+
+social_links:
+  - { platform: github, user_url: "https://github.com/simeonemanuilov", icon: "fab fa-github" }
+  - { platform: twitter, user_url: "https://twitter.com/s_emanuilov", icon: "fab fa-twitter" }
+  - { platform: linkedin, user_url: "https://www.linkedin.com/in/simeon-emanuilov/", icon: "fab fa-linkedin" }
+  - { platform: google_scholar, user_url: "https://scholar.google.bg/citations?user=clJUDxcAAAAJ&hl=en&oi=ao", icon: "fas fa-graduation-cap" }
 
 minima:
+  date_format: "%b %-d, %Y"
   social_links:
-    - { platform: github,  user_url: "https://github.com/simeonemanuilov" }
-    - { platform: twitter, user_url: "https://x.com/s_emanuilov" }
-    - { platform: linkedin,  user_url: "https://www.linkedin.com/in/simeon-emanuilov/" }
-    - { platform: google_scholar,  user_url: "https://scholar.google.bg/citations?user=clJUDxcAAAAJ&hl=en&oi=ao" }
+    - { platform: github, user_url: "https://github.com/simeonemanuilov" }
+    - { platform: twitter, user_url: "https://twitter.com/s_emanuilov" }
+    - { platform: linkedin, user_url: "https://www.linkedin.com/in/simeon-emanuilov/" }
+    - { platform: google_scholar, user_url: "https://scholar.google.bg/citations?user=clJUDxcAAAAJ&hl=en&oi=ao" }
