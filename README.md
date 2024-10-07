@@ -135,3 +135,10 @@ lv = LangVec()
 # Load the model from file
 lv.load("model.lv")
 ```
+
+## Citation
+
+If you use LangVec in your research, please cite the following paper:
+```
+Emanuilov, S. and Dimov, A., 2024. Lexical representation of dense numerical vectors: Introducing LangVec. Mathematics & Informatics, 67(3).
+```
